@@ -13,18 +13,21 @@ import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_posts.*
 
 class PostsActivity : AppCompatActivity() {
-    private val viewModel = PostsViewModel(AppModule(this))
+    private lateinit var viewModel: PostsViewModel
 
     private val disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = lastCustomNonConfigurationInstance as? PostsViewModel
+            ?: PostsViewModel(AppModule(this)).also { it.onScreenLoaded() }
+
         setContentView(R.layout.activity_posts)
 
         initUi()
-
-        viewModel.onScreenLoaded()
     }
+
+    override fun onRetainCustomNonConfigurationInstance(): Any? = viewModel
 
     private fun initUi() {
         error_retry.setOnClickListener { viewModel.onRetryClicked() }
@@ -47,7 +50,7 @@ class PostsActivity : AppCompatActivity() {
                 this.posts.apply {
                     visibility = View.VISIBLE
                     adapter = PostsAdapter(uiState.posts)
-                    layoutManager = LinearLayoutManager(context);
+                    layoutManager = LinearLayoutManager(context)
                 }
                 error.visibility = View.GONE
             }

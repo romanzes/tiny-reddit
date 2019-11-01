@@ -1,8 +1,7 @@
 package com.romanzes.tinyreddit.ui.posts
 
-import com.romanzes.tinyreddit.di.app
+import com.romanzes.tinyreddit.di.AppComponent
 import com.romanzes.tinyreddit.dto.PostData
-import com.romanzes.tinyreddit.network.PostsClient
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -10,21 +9,28 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 
-class PostsViewModel(
-    private val postsClient: PostsClient = app().postsClient
-) {
-    private val uiStateSubject =
-        BehaviorSubject.createDefault<PostsUiState>(PostsUiState.Loading)
+class PostsViewModel(appComponent: AppComponent) {
+    private val postsClient = appComponent.postsClient
+    private val strings = appComponent.strings
+
+    private val uiStateSubject = BehaviorSubject.create<PostsUiState>()
 
     private val disposables = CompositeDisposable()
 
-    fun onScreenLoaded() {
+    fun onScreenLoaded() = loadPosts()
+
+    fun onRetryClicked() = loadPosts()
+
+    private fun loadPosts() {
+        uiStateSubject.onNext(PostsUiState.Loading)
         disposables += postsClient
             .getAllPosts()
             .subscribeOn(Schedulers.io())
             .subscribeBy(onNext = {
                 val posts = it.posts.posts.map(PostData::post)
                 uiStateSubject.onNext(PostsUiState.Loaded(posts))
+            }, onError = {
+                uiStateSubject.onNext(PostsUiState.Error(strings.getErrorText()))
             })
     }
 

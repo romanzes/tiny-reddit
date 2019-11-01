@@ -5,4 +5,5 @@ import com.romanzes.tinyreddit.dto.Post
 sealed class PostsUiState {
     object Loading : PostsUiState()
     data class Loaded(val posts: List<Post>) : PostsUiState()
+    data class Error(val text: String) : PostsUiState()
 }

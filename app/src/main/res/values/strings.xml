@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Tiny Reddit</string>
+    <string name="general_error">Something went wrong. Please try again.</string>
+    <string name="error_retry">Retry</string>
 </resources>

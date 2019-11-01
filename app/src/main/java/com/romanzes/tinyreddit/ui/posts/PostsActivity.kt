@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.romanzes.tinyreddit.R
+import com.romanzes.tinyreddit.di.AppModule
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -12,7 +13,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_posts.*
 
 class PostsActivity : AppCompatActivity() {
-    private val viewModel = PostsViewModel()
+    private val viewModel = PostsViewModel(AppModule(this))
 
     private val disposables = CompositeDisposable()
 
@@ -20,7 +21,13 @@ class PostsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posts)
 
+        initUi()
+
         viewModel.onScreenLoaded()
+    }
+
+    private fun initUi() {
+        error_retry.setOnClickListener { viewModel.onRetryClicked() }
 
         disposables += viewModel
             .uiState()
@@ -33,6 +40,7 @@ class PostsActivity : AppCompatActivity() {
             is PostsUiState.Loading -> {
                 progress.visibility = View.VISIBLE
                 posts.visibility = View.GONE
+                error.visibility = View.GONE
             }
             is PostsUiState.Loaded -> {
                 progress.visibility = View.GONE
@@ -41,6 +49,13 @@ class PostsActivity : AppCompatActivity() {
                     adapter = PostsAdapter(uiState.posts)
                     layoutManager = LinearLayoutManager(context);
                 }
+                error.visibility = View.GONE
+            }
+            is PostsUiState.Error -> {
+                progress.visibility = View.GONE
+                posts.visibility = View.GONE
+                error.visibility = View.VISIBLE
+                error_text.text = uiState.text
             }
         }
     }

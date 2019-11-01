@@ -23,23 +23,26 @@ class PostsActivity : AppCompatActivity() {
         viewModel.onScreenLoaded()
 
         disposables += viewModel
-            .progressBarVisible()
+            .uiState()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(onNext = {
-                progress.visibility = if (it) View.VISIBLE else View.GONE
-            })
-        disposables += viewModel
-            .posts()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(onNext = {
-                posts.visibility = if (it.isPresent) View.VISIBLE else View.GONE
-                it.value?.let { posts ->
-                    this.posts.apply {
-                        adapter = PostsAdapter(posts)
-                        layoutManager = LinearLayoutManager(context);
-                    }
+            .subscribeBy(onNext = this::updateUi)
+    }
+
+    private fun updateUi(uiState: PostsUiState) {
+        when (uiState) {
+            is PostsUiState.Loading -> {
+                progress.visibility = View.VISIBLE
+                posts.visibility = View.GONE
+            }
+            is PostsUiState.Loaded -> {
+                progress.visibility = View.GONE
+                this.posts.apply {
+                    visibility = View.VISIBLE
+                    adapter = PostsAdapter(uiState.posts)
+                    layoutManager = LinearLayoutManager(context);
                 }
-            })
+            }
+        }
     }
 
     override fun onDestroy() {

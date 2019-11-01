@@ -31,4 +31,9 @@ ext {
     jacksonVersion = '2.9.6'
     jacksonCore = "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
     jacksonAnnotations = "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+
+    retrofitVersion = '2.5.0'
+    retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    retrofitJackson = "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
+    retrofitRxJava2 = "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
 }

@@ -9,7 +9,7 @@ data class GetPostsResponse(
 )
 
 data class PostsResponse(
-    @JsonProperty("posts")
+    @JsonProperty("children")
     val posts: List<PostData>
 )
 
@@ -34,7 +34,7 @@ data class Post(
     @JsonProperty("ups")
     val ups: Int,
     @JsonProperty("preview")
-    val preview: Preview
+    val preview: Preview?
 )
 
 data class Preview(

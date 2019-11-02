@@ -8,7 +8,7 @@ import com.romanzes.tinyreddit.R
 import com.romanzes.tinyreddit.di.app
 import com.romanzes.tinyreddit.model.Post
 import com.romanzes.tinyreddit.ui.post.PostActivity
-import com.romanzes.tinyreddit.util.show
+import com.romanzes.tinyreddit.ext.show
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.romanzes.tinyreddit.R
 import com.romanzes.tinyreddit.model.Post
-import com.romanzes.tinyreddit.util.show
+import com.romanzes.tinyreddit.ext.show
 
 class PostsAdapter(private val posts: List<Post>) : RecyclerView.Adapter<PostViewHolder>() {
     var onItemClicked: ((Post) -> Unit)? = null

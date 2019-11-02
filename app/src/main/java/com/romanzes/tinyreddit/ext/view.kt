@@ -1,4 +1,4 @@
-package com.romanzes.tinyreddit.util
+package com.romanzes.tinyreddit.ext
 
 import android.view.View
 

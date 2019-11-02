@@ -1,4 +1,4 @@
-package com.romanzes.tinyreddit.util
+package com.romanzes.tinyreddit.common
 
 import android.content.Context
 import com.romanzes.tinyreddit.R

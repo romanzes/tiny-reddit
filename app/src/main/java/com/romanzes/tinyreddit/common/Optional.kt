@@ -1,6 +1,6 @@
 // Copyright 2017 Canva Inc. All Rights Reserved.
 
-package com.romanzes.tinyreddit.util
+package com.romanzes.tinyreddit.common
 
 sealed class Optional<out T> {
     private data class Present<T>(override val value: T) : Optional<T>() {

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.romanzes.tinyreddit.model.PostTransformer
 import com.romanzes.tinyreddit.network.PostsClient
-import com.romanzes.tinyreddit.util.Strings
+import com.romanzes.tinyreddit.common.Strings
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory

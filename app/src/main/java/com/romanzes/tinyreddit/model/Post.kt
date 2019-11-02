@@ -1,7 +1,7 @@
 package com.romanzes.tinyreddit.model
 
 import com.romanzes.tinyreddit.dto.Image
-import com.romanzes.tinyreddit.util.Strings
+import com.romanzes.tinyreddit.common.Strings
 
 data class Post(
     val title: String,

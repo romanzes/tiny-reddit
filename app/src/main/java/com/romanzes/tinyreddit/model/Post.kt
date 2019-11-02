@@ -1,7 +1,7 @@
 package com.romanzes.tinyreddit.model
 
-import com.romanzes.tinyreddit.dto.Image
 import com.romanzes.tinyreddit.common.Strings
+import com.romanzes.tinyreddit.dto.Image
 
 data class Post(
     val title: String,
@@ -11,14 +11,14 @@ data class Post(
     val link: String
 )
 
-class PostTransformer(private val strings: Strings): (com.romanzes.tinyreddit.dto.Post) -> Post {
+class PostTransformer(private val strings: Strings) : (com.romanzes.tinyreddit.dto.Post) -> Post {
     override fun invoke(post: com.romanzes.tinyreddit.dto.Post): Post {
         return Post(
             title = post.title,
             author = strings.author(post.author),
             subreddit = strings.subreddit(post.subreddit),
             previewLink = post.preview?.images?.selectImage(),
-            link = String.format(POST_LINK_TEMPLATE, post.permalink)
+            link = strings.postLink(post.permalink)
         )
     }
 
@@ -27,8 +27,4 @@ class PostTransformer(private val strings: Strings): (com.romanzes.tinyreddit.dt
             .map { it.source }
             .minBy { it.width * it.height }
             ?.url
-
-    companion object {
-        const val POST_LINK_TEMPLATE = "https://m.reddit.com%s"
-    }
 }

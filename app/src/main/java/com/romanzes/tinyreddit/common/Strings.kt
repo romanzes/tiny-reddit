@@ -10,4 +10,7 @@ class Strings(private val context: Context) {
 
     fun subreddit(subreddit: String): String =
         context.getString(R.string.subreddit_pattern, subreddit)
+
+    fun postLink(permalink: String): String =
+        context.getString(R.string.link_pattern, permalink)
 }

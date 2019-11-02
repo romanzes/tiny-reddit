@@ -1,6 +1,5 @@
 package com.romanzes.tinyreddit.dto
 
-
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class GetPostsResponse(

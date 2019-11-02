@@ -1,11 +1,11 @@
 package com.romanzes.tinyreddit.ui.posts
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.romanzes.tinyreddit.R
 import com.romanzes.tinyreddit.di.AppModule
+import com.romanzes.tinyreddit.util.show
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -39,28 +39,16 @@ class PostsActivity : AppCompatActivity() {
     }
 
     private fun updateUi(uiState: PostsUiState) {
-        when (uiState) {
-            is PostsUiState.Loading -> {
-                progress.visibility = View.VISIBLE
-                posts.visibility = View.GONE
-                error.visibility = View.GONE
-            }
-            is PostsUiState.Loaded -> {
-                progress.visibility = View.GONE
-                this.posts.apply {
-                    visibility = View.VISIBLE
-                    adapter = PostsAdapter(uiState.posts)
-                    layoutManager = LinearLayoutManager(context)
-                }
-                error.visibility = View.GONE
-            }
-            is PostsUiState.Error -> {
-                progress.visibility = View.GONE
-                posts.visibility = View.GONE
-                error.visibility = View.VISIBLE
-                error_text.text = uiState.text
-            }
+        progress.show(uiState.progressVisible)
+
+        posts.show(uiState.postsVisible)
+        uiState.postsToDisplay?.let {
+            posts.adapter = PostsAdapter(it)
+            posts.layoutManager = LinearLayoutManager(this)
         }
+
+        error.show(uiState.error != null)
+        error_text.text = uiState.error
     }
 
     override fun onDestroy() {

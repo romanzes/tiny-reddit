@@ -6,4 +6,16 @@ sealed class PostsUiState {
     object Loading : PostsUiState()
     data class Loaded(val posts: List<Post>) : PostsUiState()
     data class Error(val text: String) : PostsUiState()
+
+    val progressVisible: Boolean
+        get() = this is Loading
+
+    val postsVisible: Boolean
+        get() = this is Loaded
+
+    val error: String?
+        get() = (this as? Error)?.text
+
+    val postsToDisplay: List<Post>?
+        get() = (this as? Loaded)?.posts
 }

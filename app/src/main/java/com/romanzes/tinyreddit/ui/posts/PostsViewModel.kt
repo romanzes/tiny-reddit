@@ -1,7 +1,6 @@
 package com.romanzes.tinyreddit.ui.posts
 
 import com.romanzes.tinyreddit.di.AppComponent
-import com.romanzes.tinyreddit.dto.PostData
 import com.romanzes.tinyreddit.model.Post
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -29,7 +28,8 @@ class PostsViewModel(appComponent: AppComponent) {
             .subscribeOn(Schedulers.io())
             .subscribeBy(onNext = { response ->
                 val posts = response.posts.posts
-                    .map(PostData::post)
+                    .map { it.post }
+                    .sortedByDescending { it.ups }
                     .map { Post.fromDto(it, strings) }
                 uiStateSubject.onNext(PostsUiState.Loaded(posts))
             }, onError = {

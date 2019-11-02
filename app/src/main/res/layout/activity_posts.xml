@@ -27,10 +27,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="error_text,error_retry" />
+        app:constraint_referenced_ids="errorText,errorRetry" />
 
     <TextView
-        android:id="@+id/error_text"
+        android:id="@+id/errorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/post_padding"
@@ -41,13 +41,13 @@
         tools:text="Ooh... An error happened..." />
 
     <Button
-        android:id="@+id/error_retry"
+        android:id="@+id/errorRetry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/error_padding"
         android:text="@string/error_retry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/error_text" />
+        app:layout_constraintTop_toBottomOf="@id/errorText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,7 +33,7 @@ class PostsActivity : AppCompatActivity() {
     override fun onRetainCustomNonConfigurationInstance(): Any? = viewModel
 
     private fun initUi() {
-        error_retry.setOnClickListener { viewModel.onRetryClicked() }
+        errorRetry.setOnClickListener { viewModel.onRetryClicked() }
 
         disposables += viewModel
             .uiState()
@@ -52,7 +52,7 @@ class PostsActivity : AppCompatActivity() {
         }
 
         error.show(uiState.error != null)
-        error_text.text = uiState.error
+        errorText.text = uiState.error
     }
 
     private fun openPost(post: Post) {

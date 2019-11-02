@@ -1,7 +1,6 @@
 package com.romanzes.tinyreddit.ui.posts
 
 import com.romanzes.tinyreddit.di.AppComponent
-import com.romanzes.tinyreddit.model.Post
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -11,6 +10,7 @@ import io.reactivex.subjects.BehaviorSubject
 
 class PostsViewModel(appComponent: AppComponent) {
     private val postsClient = appComponent.postsClient
+    private val postTransformer = appComponent.postTransformer
     private val strings = appComponent.strings
 
     private val uiStateSubject = BehaviorSubject.create<PostsUiState>()
@@ -30,7 +30,7 @@ class PostsViewModel(appComponent: AppComponent) {
                 val posts = response.posts.posts
                     .map { it.post }
                     .sortedByDescending { it.ups }
-                    .map { Post.fromDto(it, strings) }
+                    .map(postTransformer)
                 uiStateSubject.onNext(PostsUiState.Loaded(posts))
             }, onError = {
                 uiStateSubject.onNext(PostsUiState.Error(strings.generalErrorText()))

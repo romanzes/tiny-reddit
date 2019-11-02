@@ -3,6 +3,7 @@ package com.romanzes.tinyreddit.di
 import android.content.Context
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.romanzes.tinyreddit.model.PostTransformer
 import com.romanzes.tinyreddit.network.PostsClient
 import com.romanzes.tinyreddit.util.Strings
 import retrofit2.Retrofit
@@ -14,6 +15,7 @@ fun app(context: Context): AppComponent = AppModule(context)
 interface AppComponent {
     val context: Context
     val postsClient: PostsClient
+    val postTransformer: PostTransformer
     val strings: Strings
 }
 
@@ -21,7 +23,7 @@ class AppModule(override val context: Context) : AppComponent {
     private val objectMapper = ObjectMapper()
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-    private val retrofit: Retrofit = Retrofit.Builder()
+    private val retrofit = Retrofit.Builder()
         .baseUrl("https://www.reddit.com/")
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(JacksonConverterFactory.create(objectMapper))
@@ -30,4 +32,6 @@ class AppModule(override val context: Context) : AppComponent {
     override val postsClient: PostsClient = retrofit.create(PostsClient::class.java)
 
     override val strings = Strings(context)
+
+    override val postTransformer = PostTransformer(strings)
 }

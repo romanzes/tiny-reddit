@@ -12,11 +12,18 @@ import com.romanzes.tinyreddit.model.Post
 import com.romanzes.tinyreddit.util.show
 
 class PostsAdapter(private val posts: List<Post>) : RecyclerView.Adapter<PostViewHolder>() {
+    var onItemClicked: ((Post) -> Unit)? = null
+
     override fun getItemCount(): Int = posts.size
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = posts[position]
         holder.apply {
+            onItemClicked?.let { listener ->
+                itemView.setOnClickListener {
+                    listener(post)
+                }
+            }
             title.text = post.title
             author.text = post.author
             subreddit.text = post.subreddit

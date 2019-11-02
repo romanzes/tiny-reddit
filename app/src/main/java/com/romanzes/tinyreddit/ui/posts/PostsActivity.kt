@@ -1,10 +1,13 @@
 package com.romanzes.tinyreddit.ui.posts
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.romanzes.tinyreddit.R
 import com.romanzes.tinyreddit.di.AppModule
+import com.romanzes.tinyreddit.model.Post
+import com.romanzes.tinyreddit.ui.post.PostActivity
 import com.romanzes.tinyreddit.util.show
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -42,13 +45,21 @@ class PostsActivity : AppCompatActivity() {
         progress.show(uiState.progressVisible)
 
         posts.show(uiState.postsVisible)
-        uiState.postsToDisplay?.let {
-            posts.adapter = PostsAdapter(it)
+        uiState.postsToDisplay?.let { postsToDisplay ->
+            posts.adapter = PostsAdapter(postsToDisplay)
+                .also { it.onItemClicked = this::openPost }
             posts.layoutManager = LinearLayoutManager(this)
         }
 
         error.show(uiState.error != null)
         error_text.text = uiState.error
+    }
+
+    private fun openPost(post: Post) {
+        startActivity(
+            Intent(this, PostActivity::class.java)
+                .putExtra(PostActivity.EXTRA_URL, post.link)
+        )
     }
 
     override fun onDestroy() {

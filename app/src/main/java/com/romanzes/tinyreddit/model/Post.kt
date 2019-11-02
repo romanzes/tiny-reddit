@@ -7,9 +7,12 @@ data class Post(
     val title: String,
     val author: String,
     val subreddit: String,
-    val previewLink: String?
+    val previewLink: String?,
+    val link: String
 ) {
     companion object {
+        const val POST_LINK_TEMPLATE = "https://m.reddit.com%s"
+
         fun fromDto(
             post: com.romanzes.tinyreddit.dto.Post,
             strings: Strings
@@ -17,7 +20,8 @@ data class Post(
             title = post.title,
             author = strings.author(post.author),
             subreddit = strings.subreddit(post.subreddit),
-            previewLink = post.preview?.images?.selectImage()
+            previewLink = post.preview?.images?.selectImage(),
+            link = String.format(POST_LINK_TEMPLATE, post.permalink)
         )
 
         private fun List<Image>.selectImage(): String? =

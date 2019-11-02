@@ -47,15 +47,15 @@ data class Preview(
 data class Image(
     @JsonProperty("id")
     val id: String,
-    @JsonProperty("resolutions")
-    val resolutions: List<Resolution>
+    @JsonProperty("source")
+    val source: Resolution
 )
 
 data class Resolution(
+    @JsonProperty("width")
+    val width: Int,
     @JsonProperty("height")
     val height: Int,
     @JsonProperty("url")
-    val url: String,
-    @JsonProperty("width")
-    val width: Int
+    val url: String
 )

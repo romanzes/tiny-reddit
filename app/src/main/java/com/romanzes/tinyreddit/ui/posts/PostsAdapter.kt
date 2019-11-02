@@ -3,10 +3,13 @@ package com.romanzes.tinyreddit.ui.posts
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.romanzes.tinyreddit.R
 import com.romanzes.tinyreddit.model.Post
+import com.romanzes.tinyreddit.util.show
 
 class PostsAdapter(private val posts: List<Post>) : RecyclerView.Adapter<PostViewHolder>() {
     override fun getItemCount(): Int = posts.size
@@ -17,6 +20,13 @@ class PostsAdapter(private val posts: List<Post>) : RecyclerView.Adapter<PostVie
             title.text = post.title
             author.text = post.author
             subreddit.text = post.subreddit
+            preview.show(post.previewLink != null)
+            post.previewLink?.let { link ->
+                Glide
+                    .with(preview.context)
+                    .load(link)
+                    .into(preview)
+            }
         }
     }
 
@@ -34,4 +44,5 @@ class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val title: TextView = itemView.findViewById(R.id.title)
     val author: TextView = itemView.findViewById(R.id.author)
     val subreddit: TextView = itemView.findViewById(R.id.subreddit)
+    val preview: ImageView = itemView.findViewById(R.id.preview)
 }

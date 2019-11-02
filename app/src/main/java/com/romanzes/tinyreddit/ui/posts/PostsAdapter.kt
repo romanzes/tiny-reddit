@@ -13,7 +13,11 @@ class PostsAdapter(private val posts: List<Post>) : RecyclerView.Adapter<PostVie
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = posts[position]
-        holder.title.text = post.title
+        holder.apply {
+            title.text = post.title
+            author.text = post.author
+            subreddit.text = post.subreddit
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder =
@@ -28,4 +32,6 @@ class PostsAdapter(private val posts: List<Post>) : RecyclerView.Adapter<PostVie
 
 class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val title: TextView = itemView.findViewById(R.id.title)
+    val author: TextView = itemView.findViewById(R.id.author)
+    val subreddit: TextView = itemView.findViewById(R.id.subreddit)
 }

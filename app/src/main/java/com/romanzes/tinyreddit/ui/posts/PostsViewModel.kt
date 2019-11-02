@@ -2,6 +2,7 @@ package com.romanzes.tinyreddit.ui.posts
 
 import com.romanzes.tinyreddit.di.AppComponent
 import com.romanzes.tinyreddit.dto.PostData
+import com.romanzes.tinyreddit.model.Post
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -26,11 +27,13 @@ class PostsViewModel(appComponent: AppComponent) {
         disposables += postsClient
             .getAllPosts()
             .subscribeOn(Schedulers.io())
-            .subscribeBy(onNext = {
-                val posts = it.posts.posts.map(PostData::post)
+            .subscribeBy(onNext = { response ->
+                val posts = response.posts.posts
+                    .map(PostData::post)
+                    .map { Post.fromDto(it, strings) }
                 uiStateSubject.onNext(PostsUiState.Loaded(posts))
             }, onError = {
-                uiStateSubject.onNext(PostsUiState.Error(strings.getErrorText()))
+                uiStateSubject.onNext(PostsUiState.Error(strings.generalErrorText()))
             })
     }
 

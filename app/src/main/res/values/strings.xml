@@ -2,4 +2,6 @@
     <string name="app_name">Tiny Reddit</string>
     <string name="general_error">Something went wrong. Please try again.</string>
     <string name="error_retry">Retry</string>
+    <string name="author_pattern">By %s</string>
+    <string name="subreddit_pattern">\/r\/%s</string>
 </resources>

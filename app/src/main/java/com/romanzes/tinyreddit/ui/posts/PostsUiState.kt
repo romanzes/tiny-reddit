@@ -1,6 +1,6 @@
 package com.romanzes.tinyreddit.ui.posts
 
-import com.romanzes.tinyreddit.dto.Post
+import com.romanzes.tinyreddit.model.Post
 
 sealed class PostsUiState {
     object Loading : PostsUiState()

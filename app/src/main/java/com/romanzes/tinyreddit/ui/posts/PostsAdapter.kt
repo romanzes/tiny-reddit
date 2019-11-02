@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.romanzes.tinyreddit.R
-import com.romanzes.tinyreddit.dto.Post
+import com.romanzes.tinyreddit.model.Post
 
 class PostsAdapter(private val posts: List<Post>) : RecyclerView.Adapter<PostViewHolder>() {
     override fun getItemCount(): Int = posts.size

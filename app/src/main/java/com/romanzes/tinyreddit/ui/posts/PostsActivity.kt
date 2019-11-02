@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.romanzes.tinyreddit.R
-import com.romanzes.tinyreddit.di.AppModule
+import com.romanzes.tinyreddit.di.app
 import com.romanzes.tinyreddit.model.Post
 import com.romanzes.tinyreddit.ui.post.PostActivity
 import com.romanzes.tinyreddit.util.show
@@ -23,7 +23,7 @@ class PostsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = lastCustomNonConfigurationInstance as? PostsViewModel
-            ?: PostsViewModel(AppModule(this)).also { it.onScreenLoaded() }
+            ?: PostsViewModel(app(this)).also { it.onScreenLoaded() }
 
         setContentView(R.layout.activity_posts)
 

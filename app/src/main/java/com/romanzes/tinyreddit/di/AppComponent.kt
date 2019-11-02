@@ -19,7 +19,7 @@ interface AppComponent {
     val strings: Strings
 }
 
-class AppModule(override val context: Context) : AppComponent {
+private class AppModule(override val context: Context) : AppComponent {
     private val objectMapper = ObjectMapper()
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 

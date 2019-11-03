@@ -25,7 +25,16 @@ class PostTransformer(private val strings: Strings) : (PostDto) -> Post {
 
     private fun List<Image>.selectImage(): String? =
         this
-            .map { it.source }
-            .minBy { it.width * it.height }
+            .minWith(IMAGE_COMPARATOR)
+            ?.source
             ?.url
+
+    companion object {
+        private val IMAGE_COMPARATOR = Comparator<Image> { first, second ->
+            first.area - second.area
+        }
+
+        private val Image.area: Int
+            get() = source.width * source.height
+    }
 }

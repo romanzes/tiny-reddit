@@ -5,13 +5,13 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 
 class PostsViewModel(appComponent: AppComponent) {
     private val postsClient = appComponent.postsClient
     private val postTransformer = appComponent.postTransformer
     private val strings = appComponent.strings
+    private val schedulers = appComponent.schedulers
 
     private val uiStateSubject = BehaviorSubject.create<PostsUiState>()
 
@@ -25,7 +25,7 @@ class PostsViewModel(appComponent: AppComponent) {
         uiStateSubject.onNext(PostsUiState.Loading)
         disposables += postsClient
             .getAllPosts()
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(schedulers.io())
             .subscribeBy(onNext = { response ->
                 val posts = response.posts.posts
                     .map { it.post }

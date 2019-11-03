@@ -2,6 +2,9 @@ package com.romanzes.tinyreddit.ui.posts
 
 import com.romanzes.tinyreddit.model.Post
 
+/**
+ * A representation of PostsActivity UI at some point in time.
+ */
 sealed class PostsUiState {
     object Loading : PostsUiState()
     data class Loaded(val posts: List<Post>) : PostsUiState()

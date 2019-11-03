@@ -22,6 +22,7 @@ class PostsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // TODO use a [androidx.lifecycle.ViewModel] to store non-config state
         viewModel = lastCustomNonConfigurationInstance as? PostsViewModel
             ?: PostsViewModel(app(this)).also { it.onScreenLoaded() }
 
@@ -35,6 +36,7 @@ class PostsActivity : AppCompatActivity() {
     private fun initUi() {
         errorRetry.setOnClickListener { viewModel.onRetryClicked() }
 
+        // subscribe to UI updates
         disposables += viewModel
             .uiState()
             .observeOn(AndroidSchedulers.mainThread())

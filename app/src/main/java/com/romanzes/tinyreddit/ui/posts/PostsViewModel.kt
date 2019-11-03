@@ -29,7 +29,7 @@ class PostsViewModel(appComponent: AppComponent) {
             .subscribeBy(onNext = { response ->
                 val posts = response.posts.posts
                     .map { it.post }
-                    .sortedByDescending { it.ups }
+                    .sortedByDescending { it.ups } // most upvoted posts should be at the top
                     .map(postTransformer)
                 uiStateSubject.onNext(PostsUiState.Loaded(posts))
             }, onError = {

@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MainText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/main_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/main_text</item>
+    </style>
+
+    <style name="SecondaryText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/secondary_text</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/secondary_text</item>
+    </style>
+
 </resources>

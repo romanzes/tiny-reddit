@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="post_padding">16dp</dimen>
+    <dimen name="main_text">20sp</dimen>
+    <dimen name="secondary_text">16sp</dimen>
+
+    <dimen name="post_horizontal_padding">8dp</dimen>
+    <dimen name="post_vertical_padding">4dp</dimen>
+    <dimen name="post_horizontal_margin">16dp</dimen>
+    <dimen name="post_vertical_margin">8dp</dimen>
     <dimen name="error_padding">16dp</dimen>
 </resources>
